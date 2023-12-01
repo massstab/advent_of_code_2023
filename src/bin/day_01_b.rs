@@ -6,7 +6,7 @@ fn main() {
 
     let mut sum = 0;
     for line in contents.lines() {
-        // println!("First from left!");
+        println!("First from left!");
         // Starting normally finding the first digit as number or as word (from right to left)
         let mut first_digit = 0;
         let mut index_left = line.len();
@@ -27,23 +27,23 @@ fn main() {
                 }
             };
 
-            // println!(
-            //     "{:?} word {}({}). Smallest index is {:?}",
-            //     first_word_digit, number, idx, index_left
-            // );
+            println!(
+                "{:?} word {}({}). Smallest index is {:?}",
+                first_word_digit, number, idx, index_left
+            );
         }
         for (idx, char) in line.char_indices() {
             if char.is_ascii_digit() {
                 if idx < index_left {
                     index_left = idx;
                     first_digit = char.to_digit(10).unwrap() as usize;
-                    // println!("Number {} is earlier at index {}", first_digit, idx);
+                    println!("Number {} is earlier at index {}", first_digit, idx);
                 }
                 break;
             }
         }
 
-        // println!("Now from right!");
+        println!("Now from right!");
         // Now the same in reverse (from right to left)
         let mut second_digit = 0;
         let mut index_right = 0;
@@ -64,27 +64,27 @@ fn main() {
                 }
             };
 
-            // println!(
-            //     "{:?} word {}({}). Largest index is {:?}",
-            //     second_word_digit, number, idx, index_right
-            // );
+            println!(
+                "{:?} word {}({}). Largest index is {:?}",
+                second_word_digit, number, idx, index_right
+            );
         }
          for (idx, char) in line.char_indices().rev() {
             if char.is_ascii_digit() {
                 if idx >= index_right {
                     index_right = idx;
                     second_digit = char.to_digit(10).unwrap() as usize;
-                    // println!("Number {} is earlier at index {}", second_digit, idx);
+                    println!("Number {} is earlier at index {}", second_digit, idx);
                 }
                 break;
             }
         }
         let summand = 10 * first_digit + second_digit;
-        // println!("Adding {} to the total sum", summand);
-        // println!("Next...");
-        // println!("");
-        // println!("");
-        println!("{}", summand);
+        println!("Adding {} to the total sum", summand);
+        println!("Next...");
+        println!("");
+        println!("");
+        // println!("{}", summand);
         sum += summand
     }
     dbg!(sum);
