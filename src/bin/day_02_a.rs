@@ -5,7 +5,7 @@ const GREEN: u8 = 13;
 const BLUE: u8 = 14;
 
 fn main() {
-    let input = "data/day_01_a.txt";
+    let input = "data/day_02_a.txt";
     let contents = fs::read_to_string(input).unwrap();
     let mut sum_id = 0;
 
