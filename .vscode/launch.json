@@ -7,6 +7,24 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Debug executable 'day_05_a'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=day_05_a",
+                    "--package=advent_of_code_2023"
+                ],
+                "filter": {
+                    "name": "day_05_a",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug executable 'day_01_a'",
             "cargo": {
                 "args": [
