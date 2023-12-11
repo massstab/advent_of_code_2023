@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Name:      massstab
-   Date:      07.12.23
+   Date:      08.12.23
    Kurs:      Advent of Code
    Topic:     Haunted Wasteland
 """
