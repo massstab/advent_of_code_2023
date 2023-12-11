@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Name:      massstab
-   Date:      07.12.23
+   Date:      09.12.23
    Kurs:      Advent of Code
    Topic:     Mirage Maintenance
 """

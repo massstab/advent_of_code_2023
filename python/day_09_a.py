@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Name:      massstab
-   Date:      07.12.23
+   Date:      09.12.23
    Kurs:      Advent of Code
    Topic:     Mirage Maintenance
 """
@@ -37,4 +37,3 @@ for history in histories:
     sum += res + history[-1]
     # print("#########")
 print(sum)
-# 
