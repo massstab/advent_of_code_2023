@@ -12,7 +12,7 @@ import numpy as np
 
 np.set_printoptions(threshold=sys.maxsize)
 
-with open("python/data/day_13.txt") as f:
+with open("data/day_13.txt") as f:
     lines = f.readlines()
 
 patterns = []
@@ -30,11 +30,15 @@ for i, line in enumerate(lines):
 # print(patterns)
 sum_left = 0
 sum_above = 0
-print(sum_left)
-print(sum_above)
+#print(sum_left)
+#print(sum_above)
 for j, p in enumerate(patterns):
     (m, n) = p.shape
-    for i in range(2, n, 2):
+    for i in range(n):
+        print("We are in the L-R for Loop")
+        print(f"{i} in  range({n})")
+        print("We are in the checking for horizontal symmetry...")
+
         # horizontal symmetry
         to_check_L = p[:, :i]
         to_check_L_flipped = np.flip(to_check_L, axis=1)
@@ -42,38 +46,66 @@ for j, p in enumerate(patterns):
         # print(to_check_L_flipped)
         # print("------------")
 
-        if (to_check_L == to_check_L_flipped).all():
+        if (to_check_L == to_check_L_flipped).all() and ((to_check_L.shape[1]) % 2 == 0) and i > 1:
+            print(f"Found LEFT Horizontal Symmetry in pattern {j+1}")
+            print(to_check_L)
+            print()
+            print(to_check_L_flipped)
+            print("Adding {} to the sum.".format(to_check_L.shape[1] / 2))
             sum_left += to_check_L.shape[1] / 2
 
         to_check_R = p[:, i:]
         to_check_R_flipped = np.flip(to_check_R, axis=1)
-        # print(to_check_R)
-        # print(to_check_R_flipped)
-        # print("------------")
-        if (to_check_R == to_check_R_flipped).all():
+        print(f"If check: ... and {to_check_R.shape[1]} % 2 == 0 and {i} < {n}-1")
+        if (to_check_R == to_check_R_flipped).all() and ((to_check_R.shape[1]) % 2 == 0) and i < n-1:
+            print(f"Found RIGHT Horizontal Symmetry in pattern {j+1}")
+            print(to_check_R)
+            print()
+            print(to_check_R_flipped)
+            print("Adding {} to the sum.".format(to_check_R.shape[1] / 2 + i))
             sum_left += to_check_R.shape[1] / 2 + i
+        print("---------NEXT---------")
+    print()
+    print("------SYMMETRY CHANGE------")
+
+    for j in range(m):
+        print("We are in the U-D for Loop")
+        print(f"{j} in  range({m})")
+        print("We are in the checking for vertical symmetry...")
 
         # verrtical symmetry
-        to_check_U = p[:i, :]
+        to_check_U = p[:j, :]
         to_check_U_flipped = np.flip(to_check_U, axis=0)
 
-        if (to_check_U == to_check_U_flipped).all():
-            sum_above += to_check_U.shape[0] / 2
+        if (to_check_U == to_check_U_flipped).all() and ((to_check_U.shape[0]) % 2 == 0) and j > 1:
+            print(f"Found Up Vertical Symmetry in pattern {j+1}")
+            print(to_check_U)
+            print()
+            print(to_check_U_flipped)
+            print("Adding {} to the sum".format(100 * to_check_U.shape[0] / 2))
+            sum_above += 100 * to_check_U.shape[0] / 2
 
-        to_check_D = p[-i:, :]
+        to_check_D = p[j:, :]
         to_check_D_flipped = np.flip(to_check_D, axis=0)
-        print(to_check_D)
-        print(to_check_D_flipped)
-        print("------------")
+        # print("------------")
 
-        if (to_check_D == to_check_D_flipped).all():
-            sum_above += 100 * (to_check_D.shape[0] / 2 + i)
+        if (to_check_D == to_check_D_flipped).all() and ((to_check_D.shape[0]) % 2 == 0) and j < m-1:
+            print("fFound Down Vertical Symmetry in pattern {j+1}")
+            print(to_check_D)
+            print()
+            print(to_check_D_flipped)
+            print("Adding {} to the sum".format(100 * (to_check_D.shape[0] / 2 + j)))
+            sum_above += 100 * (to_check_D.shape[0] / 2 + j)
+        print("---------NEXT---------")
 
 ans = sum_left + sum_above
 
-print(ans)
+print("Total sum: ", ans)
 
 #  too low: 21136
+# not right: 24965
+# not right: 25031
+# too high: 31268
 
 
 
