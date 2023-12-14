@@ -12,7 +12,7 @@ import numpy as np
 
 np.set_printoptions(threshold=sys.maxsize)
 
-with open("data/day_13.txt") as f:
+with open("python/data/day_13.txt") as f:
     lines = f.readlines()
 
 patterns = []
