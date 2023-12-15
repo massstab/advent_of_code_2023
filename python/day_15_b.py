@@ -7,8 +7,6 @@
    Topic:     Lens Library
 """
 
-import sys
-import re
 import numpy as np
 
 
@@ -21,8 +19,6 @@ def get_box_number(hash):
         curr %= 256
     return curr
 
-
-np.set_printoptions(threshold=sys.maxsize)
 
 with open("python/data/day_15.txt") as f:
     line = f.readline()
@@ -44,9 +40,7 @@ box_numbers = []
 for h in labels:
     box_numbers.append(get_box_number(h))
 
-
 boxes_dict = {}
-
 for lab, num, op in zip(labels, box_numbers, operations):
     if op.isnumeric():
         focal = op
@@ -66,7 +60,6 @@ for lab, num, op in zip(labels, box_numbers, operations):
             for i, lens in enumerate(boxes_dict[num]):
                 if lab in lens:
                     del boxes_dict[num][i]
-
 
 ans = 0
 for box in boxes_dict:
