@@ -24,7 +24,7 @@ def get_box_number(hash):
 
 np.set_printoptions(threshold=sys.maxsize)
 
-with open("data/day_15.txt") as f:
+with open("python/data/day_15.txt") as f:
     line = f.readline()
 
 values_list = line.split(',')
@@ -36,7 +36,7 @@ for item in values_list:
     parts = item.split("=")
     box = parts[0] if len(parts) == 2 else parts[0][:-1]
     wert = parts[1] if len(parts) > 1 and parts[1] != "-" else "-"
-    
+
     labels.append(box)
     operations.append(wert)
 
@@ -45,17 +45,19 @@ for h in labels:
     box_numbers.append(get_box_number(h))
 
 
-print(labels)
-print(box_numbers)
-print(operations)
-
 boxes_dict = {}
 
 for lab, num, op in zip(labels, box_numbers, operations):
     if op.isnumeric():
         focal = op
         if num in boxes_dict.keys():
-            boxes_dict[num].append([lab, focal])
+            found = False
+            for j, l in enumerate(boxes_dict[num]):
+                if l[0] == lab:
+                    boxes_dict[num][j] = [lab, focal]
+                    found = True
+            if not found:
+                boxes_dict[num].append([lab, focal])
         else:
             boxes_dict[num] = []
             boxes_dict[num].append([lab, focal])
@@ -65,14 +67,11 @@ for lab, num, op in zip(labels, box_numbers, operations):
                 if lab in lens:
                     del boxes_dict[num][i]
 
-    print(f"After {lab}={op}")
-    for b in boxes_dict:
-        print(f"Box {b}: {boxes_dict[b]}")
-    print()
 
 ans = 0
 for box in boxes_dict:
     for slot, lenses in enumerate(boxes_dict[box]):
         power = (box + 1) * (slot + 1) * int(lenses[1])
         ans += power
-        print(f"({box + 1}) * {slot+1} * {int(lenses[1])} = {power}")
+        # print(f"({box + 1}) * {slot+1} * {int(lenses[1])} = {power}")
+print(ans)
