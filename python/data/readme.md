@@ -1,0 +1,1 @@
+Put your data input in the format day_xy.txt in this folder.
