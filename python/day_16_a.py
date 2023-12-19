@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Name:      massstab
-   Date:      15.12.23
+   Date:      16.12.23
    Kurs:      Advent of Code
    Topic:     The Floor Will Be Lava
 """
@@ -14,7 +14,7 @@ import re
 import sys
 sys.setrecursionlimit(10000)
 
-with open("python/data/day_16.txt") as f:
+with open("data/day_16.txt") as f:
     lines = f.readlines()
 
 lines = [line.rsplit() for line in lines]
@@ -25,19 +25,15 @@ for line in lines:
 
 m, n = len(L), len(L[0])
 
-
 seen = {}  # holds all seen tiles (key) with the beam directions [value]
 
 for i in range(m):
-    # initialize a dict for every tile
+    # initialize a key/value pair for every tile
     for j in range(n):
         seen[(j, i)] = []
 
-
-def step(aim, x, y, energized):
+def step(aim, x, y):
     symbols = ['.', '^', '>', 'v', '<']
-    # if L[y][x] in symbols:
-    #     L[y][x] = aim
     if y < 0 or y > m-1 or x < 0 or x > n-1:
         return 0
     elif aim in seen[(x, y)]:
@@ -47,64 +43,61 @@ def step(aim, x, y, energized):
     if aim == '^':
         if 0 < y < m:
             if L[y-1][x] in symbols:
-                energized += step(aim, x, y-1, energized)
+                step(aim, x, y-1)
             elif L[y-1][x] == '/':
-                energized += step('>', x, y-1, energized)
+                step('>', x, y-1)
             elif L[y-1][x] == '\\':
-                energized += step('<', x, y-1, energized)
+                step('<', x, y-1)
             elif L[y-1][x] == '|':
-                energized += step(aim, x, y-1, energized)
+                step(aim, x, y-1)
             elif L[y-1][x] == '-':
-                energized += step('>', x, y-1, 1)
-                energized += step('<', x, y-1, 1)
-                energized -= 1
+                step('>', x, y-1)
+                step('<', x, y-1)
+                
     if aim == '>':
         if 0 <= x < n-1:
             if L[y][x+1] in symbols:
-                energized += step(aim, x+1, y, energized)
+                step(aim, x+1, y)
             elif L[y][x+1] == '/':
-                energized += step('^', x+1, y, energized)
+                step('^', x+1, y)
             elif L[y][x+1] == '\\':
-                energized += step('v', x+1, y, energized)
+                step('v', x+1, y)
             elif L[y][x+1] == '|':
-                energized += step('^', x+1, y, 1)
-                energized += step('v', x+1, y, 1)
-                energized -= 1
+                step('^', x+1, y)
+                step('v', x+1, y)
             elif L[y][x+1] == '-':
-                energized += step(aim, x+1, y, energized)
+                step(aim, x+1, y)
     if aim == 'v':
         if 0 <= y < m-1:
             if L[y+1][x] in symbols:
-                energized += step(aim, x, y+1, energized)
+                step(aim, x, y+1)
             elif L[y+1][x] == '/':
-                energized += step('<', x, y+1, energized)
+                step('<', x, y+1)
             elif L[y+1][x] == '\\':
-                energized += step('>', x, y+1, energized)
+                step('>', x, y+1)
             elif L[y+1][x] == '|':
-                energized += step(aim, x, y+1, energized)
+                step(aim, x, y+1)
             elif L[y+1][x] == '-':
-                energized += step('>', x, y+1, 1)
-                energized += step('<', x, y+1, 1)
-                energized -= 1
+                step('>', x, y+1)
+                step('<', x, y+1)
     if aim == '<':
         if 0 < x < n:
             if L[y][x-1] in symbols:
-                energized += step(aim, x-1, y, energized)
+                step(aim, x-1, y)
             elif L[y][x-1] == '/':
-                energized += step('v', x-1, y, energized)
+                step('v', x-1, y)
             elif L[y][x-1] == '\\':
-                energized += step('^', x-1, y, energized)
+                step('^', x-1, y)
             elif L[y][x-1] == '|':
-                energized += step('^', x-1, y, 1)
-                energized += step('v', x-1, y, 1)
-                energized -= 1
+                step('^', x-1, y)
+                step('v', x-1, y)
             elif L[y][x-1] == '-':
-                energized += step(aim, x-1, y, energized)
+                step(aim, x-1, y)
 
-    return energized
+    return
 
 
-energized = step('v', 0, 0, 1)
+step('v', 0, 0)
 
 count = 0
 for i in seen:
@@ -112,12 +105,9 @@ for i in seen:
         L[i[1]][i[0]] = '#'
         count += 1
 
+#for line in L:
+#    print(''.join(line))
 
-
-for line in L:
-    print(''.join(line))
-
-# print(len(seen2))
 print(count)
 
 #  too low: 218
@@ -125,4 +115,3 @@ print(count)
 #  not: 7185
 #  too low: 44
 #  correct: 7199
-
